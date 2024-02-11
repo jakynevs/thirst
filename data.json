@@ -1,0 +1,29 @@
+{
+  "drinkType": [
+    {
+      "id": 101,
+      "name": "Pop",
+      "price": 1.99
+    },
+    {
+      "id": 102,
+      "name": "Juice",
+      "price": 2.99
+    },
+    {
+      "id": 103,
+      "name": "Agua",
+      "price": 2.50 
+    },
+    {
+      "id": 104,
+      "name": "Kombucha",
+      "price": 4
+    }
+    {
+      "id": 105,
+      "name": "Pina Coloda",
+      "price": 9
+    }
+  ]
+}
