@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-function EnterField() {
+function EnterMoneyField() {
     const [moneyGiven, setMoneyGiven] = useState('');
 
     return (
@@ -15,4 +15,4 @@ function EnterField() {
     )
 }
 
-export default EnterField;
+export default EnterMoneyField;
