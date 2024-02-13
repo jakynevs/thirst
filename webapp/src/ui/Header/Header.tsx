@@ -7,7 +7,7 @@ export function Header() {
         <header className={styles.header}>
             <img width={80} src={logo} className={styles.rviewerLogo} alt="Rviewer logo"/>
             <h3>
-                Welcome to the Rviewer React skeleton!
+                Please choose a drink and enter money
             </h3>
         </header>
     )
