@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react';
 
 interface Drink {
     name: string;
-    price: Float32Array;
+    price: number;
   }
 
 function Dropdown() {
@@ -15,19 +15,13 @@ function Dropdown() {
     };
 
     useEffect(() => {
-        console.log("Fetching drinks data");
-
         fetch('http://localhost:8000/drinks')
         .then(response => response.json())
-        .then(drinksData => {
-            const drinksArray: Drink[] = Object.keys(drinksData).map(key => ({
-                name: key,
-                price: drinksData[key]
-            }))
-            console.log("DrinksArray: ", drinksArray)
-            setDrinks(drinksArray);
-        })
-        .catch(error => console.error('Error fetching drinks:', error));
+        .then(drinksData => { 
+            console.log("DrinksArray: ", drinksData)
+            setDrinks(drinksData);
+         })
+         .catch(error => console.error('Error fetching drinks:', error));
     }, [])
 
     return (
