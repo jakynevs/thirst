@@ -1,8 +1,12 @@
 import { useState } from 'react';
 import Dropdown from '../../ui/Components/Dropdown';
 import EnterMoneyField from '../../ui/Components/EnterMoneyField';
-  
-function DrinkPurchase() {
+
+type DrinkPurchaseProps = {
+    onDrinkPurchase: (message: string) => void; // Adding this line
+  };
+
+function DrinkPurchase({ onDrinkPurchase }: DrinkPurchaseProps) {
     const [selectedDrink, setSelectedDrink] = useState('');    
     const [moneyGiven, setMoneyGiven] = useState('');
 
@@ -22,14 +26,19 @@ function DrinkPurchase() {
                 }),
             })
             
+            const result = await response.json();
             if (response.ok) {
-                const result = await response.json()
                 console.log('Success', result)
+                onDrinkPurchase(result.message)
+                
             } else {
                 console.error('HTTP error:', response.status);
+                onDrinkPurchase(result.message)
+                
             }
         } catch (error) {
             console.log('Network error', error)
+            onDrinkPurchase('Failed to complete purchase due to a network error.');
         }
     
     };
@@ -44,4 +53,4 @@ function DrinkPurchase() {
   }
 
   export default DrinkPurchase;
-  
+
