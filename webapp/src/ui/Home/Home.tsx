@@ -1,15 +1,15 @@
+import React, { useState } from 'react'
 import styles from './Home.module.css'
-import Dropdown from '../Components/Dropdown'
-import EnterMoneyField from '../Components/EnterMoneyField'
+import DrinkPurchase from '../../features/DrinkPurchase/DrinkPurchase';
 
-export function Home() {
+const Home: React.FC = () => {
+    const [moneyGiven, setMoneyGiven] = useState('');
 
     return (
         <div className={styles.home}>
-        <Dropdown /> 
-        <EnterMoneyField />           
+            <DrinkPurchase /> 
         </div>
     )
-
-
 }
+
+export default Home;

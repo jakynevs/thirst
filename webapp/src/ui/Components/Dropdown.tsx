@@ -5,9 +5,13 @@ interface Drink {
     price: number;
   }
 
-function Dropdown() {
+interface DropdownProps {
+    selectedDrink: string;
+    setSelectedDrink: (drink: string) => void;
+}
+  
+const Dropdown: React.FC<DropdownProps> = ({ selectedDrink, setSelectedDrink}) => {
     const[drinks, setDrinks] = useState<Drink[]>([]);
-    const[selectedDrink, setSelectedDrink] = useState('');
 
     // Handler for value change
     const handleChange = (event) => {

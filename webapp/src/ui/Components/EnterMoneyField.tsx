@@ -1,8 +1,11 @@
-import { useState, useEffect } from 'react';
+import React from 'react'
 
-function EnterMoneyField() {
-    const [moneyGiven, setMoneyGiven] = useState('');
+interface EnterMoneyFieldProps {
+    moneyGiven: string;
+    setMoneyGiven: (moneyGiven: string) => void;
 
+}
+const EnterMoneyField: React.FC<EnterMoneyFieldProps> = ({ moneyGiven, setMoneyGiven }) => {
     return (
         <div>
             <input
