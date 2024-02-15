@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Dropdown from '../../ui/Components/Dropdown';
 import EnterMoneyField from '../../ui/Components/EnterMoneyField';
   
