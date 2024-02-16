@@ -13,7 +13,7 @@
     {
       "id": 103,
       "name": "Agua",
-      "price": 2.50 
+      "price": 2.5
     },
     {
       "id": 104,
@@ -25,5 +25,15 @@
       "name": "Pina Coloda",
       "price": 9
     }
-  ]
+  ],
+  "earnings": {
+    "totalEarnings": 6.99,
+    "earningsByDrink": {
+      "Pop": 1.99,
+      "Juice": 0,
+      "Agua": 5,
+      "Kombucha": 0,
+      "Pina Coloda": 0
+    }
+  }
 }

@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import Dropdown from '../../ui/Components/Dropdown';
-import EnterMoneyField from '../../ui/Components/EnterMoneyField';
+import Dropdown from '../ui/Components/Dropdown';
+import EnterMoneyField from '../ui/Components/EnterMoneyField';
 
 type DrinkPurchaseProps = {
     onDrinkPurchase: (message: string) => void; // Adding this line

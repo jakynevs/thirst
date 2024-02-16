@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styles from './Home.module.css'
-import DrinkPurchase from '../../features/DrinkPurchase/DrinkPurchase';
+import DrinkPurchase from '../../features/DrinkPurchase';
 
 type homeProps = { 
     onDrinkPurchase: (text: string) => void;
