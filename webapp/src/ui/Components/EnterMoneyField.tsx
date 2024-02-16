@@ -6,12 +6,19 @@ interface EnterMoneyFieldProps {
 
 }
 const EnterMoneyField: React.FC<EnterMoneyFieldProps> = ({ moneyGiven, setMoneyGiven }) => {
+
+    const handleChange = (e) => {
+        const value = e.target.value;
+        if (!value || parseFloat(value) >= 0) {
+            setMoneyGiven(value)
+        }
+    }
     return (
         <div>
             <input
                 type='number'
                 value={moneyGiven}
-                onChange={(e) => setMoneyGiven(e.target.value)}
+                onChange={handleChange}
                 placeholder='Enter money'
             />
         </div>
