@@ -12,8 +12,10 @@ function DrinkPurchase({ onDrinkPurchase }: DrinkPurchaseProps) {
 
     const handleBuyClick = async (e) => {
         e.preventDefault();
+        if (!selectedDrink) {
+            onDrinkPurchase('Please select a drink first.')
+        } else {
         console.log(`Purchasing ${selectedDrink} with ${moneyGiven}`);
-
         try {
             const response = await fetch('http://localhost:8000/order', {
                 method: 'POST',
@@ -39,7 +41,7 @@ function DrinkPurchase({ onDrinkPurchase }: DrinkPurchaseProps) {
         } catch (error) {
             console.log('Network error', error)
             onDrinkPurchase('Failed to complete purchase due to a network error.');
-        }
+        }}
     
     };
   
