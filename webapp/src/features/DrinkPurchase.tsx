@@ -3,7 +3,7 @@ import Dropdown from '../ui/Components/Dropdown';
 import EnterMoneyField from '../ui/Components/EnterMoneyField';
 
 type DrinkPurchaseProps = {
-    onDrinkPurchase: (message: string) => void; // Adding this line
+    onDrinkPurchase: (message: string) => void; 
   };
 
 function DrinkPurchase({ onDrinkPurchase }: DrinkPurchaseProps) {
