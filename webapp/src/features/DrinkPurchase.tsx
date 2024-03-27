@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Dropdown from '../ui/Components/Dropdown';
 import EnterMoneyField from '../ui/Components/EnterMoneyField';
+import Earnings from './Earnings';
 
 type DrinkPurchaseProps = {
     onDrinkPurchase: (message: string) => void; 
@@ -9,6 +10,18 @@ type DrinkPurchaseProps = {
 function DrinkPurchase({ onDrinkPurchase }: DrinkPurchaseProps) {
     const [selectedDrink, setSelectedDrink] = useState('');    
     const [moneyGiven, setMoneyGiven] = useState('');
+    const [showEarnings, setShowEarnings] = useState(false);
+    const [earningsTrigger, setEarningsTrigger] = useState(0);
+
+
+    const handleEarningsToggle = () => {
+        setShowEarnings(prevState => ! prevState)
+        } 
+
+    // Function to increment triggerFetch
+    const handleFetchEarnings = () => {
+        setEarningsTrigger(prev => prev + 1);
+        };
 
     const handleBuyClick = async (e) => {
         e.preventDefault();
@@ -50,6 +63,8 @@ function DrinkPurchase({ onDrinkPurchase }: DrinkPurchaseProps) {
         <Dropdown selectedDrink={selectedDrink} setSelectedDrink={setSelectedDrink} />
         <EnterMoneyField moneyGiven={moneyGiven} setMoneyGiven={setMoneyGiven} />
         <button onClick={handleBuyClick}>Buy</button>
+        <button onClick={handleEarningsToggle}>Show Earnings</button>
+            {showEarnings && <Earnings triggerFetch={earningsTrigger}/> }
       </div>
     );
   }

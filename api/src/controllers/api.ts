@@ -44,6 +44,17 @@ export const loadEndpoints = (app: Application): void => {
             return res.status(500).json({ error: 'Error fetching drinks data' })
         }
     });
+    
+    app.get("/earnings", (req: Request, res: Response) => {
+        const data = readDataFromFile(dataFilePath);
+        const earnings = data.earnings
+        if (earnings) {
+            return res.status(200).json(earnings);
+        } else {
+            return res.status(500).json({ error: 'Error fetching earnings data' })
+        }
+    });
+    
     app.post("/order", (req: Request, res: Response) => {
         const { drinkName, moneyGiven } = req.body;        
         const data = readDataFromFile(dataFilePath);        
