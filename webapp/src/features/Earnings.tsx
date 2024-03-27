@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 
+// Add props type for Earnings
 type EarningsProps = {
     triggerFetch: number;
   };
-
-const Earnings: React.FC<EarningsProps> = ({ triggerFetch }) => {
+  
+const Earnings: React.FC<EarningsProps> = ({triggerFetch}) => {
     // Updating the earnings state to have a more specific type
     const [earnings, setEarnings] = useState<{
         totalEarnings: number;
@@ -25,6 +26,7 @@ const Earnings: React.FC<EarningsProps> = ({ triggerFetch }) => {
     }
     
     useEffect(() => {
+        console.log("Test")
         fetchEarnings();
     }, [triggerFetch])
 

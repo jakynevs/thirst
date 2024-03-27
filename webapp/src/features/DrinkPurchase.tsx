@@ -15,7 +15,7 @@ function DrinkPurchase({ onDrinkPurchase }: DrinkPurchaseProps) {
 
 
     const handleEarningsToggle = () => {
-        setShowEarnings(prevState => ! prevState)
+        setShowEarnings(!showEarnings)
         } 
 
     // Function to increment triggerFetch
@@ -45,6 +45,7 @@ function DrinkPurchase({ onDrinkPurchase }: DrinkPurchaseProps) {
             if (response.ok) {
                 console.log('Success', result)
                 onDrinkPurchase(result.message)
+                handleFetchEarnings()
                 
             } else {
                 console.error('HTTP error:', response.status);
@@ -59,13 +60,15 @@ function DrinkPurchase({ onDrinkPurchase }: DrinkPurchaseProps) {
     };
   
     return (
-      <div>
-        <Dropdown selectedDrink={selectedDrink} setSelectedDrink={setSelectedDrink} />
-        <EnterMoneyField moneyGiven={moneyGiven} setMoneyGiven={setMoneyGiven} />
-        <button onClick={handleBuyClick}>Buy</button>
-        <button onClick={handleEarningsToggle}>Show Earnings</button>
-            {showEarnings && <Earnings triggerFetch={earningsTrigger}/> }
-      </div>
+        <div>
+            <Dropdown selectedDrink={selectedDrink} setSelectedDrink={setSelectedDrink} />
+            <EnterMoneyField moneyGiven={moneyGiven} setMoneyGiven={setMoneyGiven} />
+            <button onClick={handleBuyClick}>Buy</button>
+            <button onClick={handleEarningsToggle}>{showEarnings ? 'Hide' : 'Show'} Earnings</button>
+            <div style={{ display: showEarnings ? 'block' : 'none' }}>
+                <Earnings triggerFetch={earningsTrigger} />
+            </div>      
+        </div>
     );
   }
 
