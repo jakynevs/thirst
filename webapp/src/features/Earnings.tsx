@@ -5,7 +5,12 @@ type EarningsProps = {
   };
 
 const Earnings: React.FC<EarningsProps> = ({ triggerFetch }) => {
-    const [earnings, setEarnings] = useState(null)
+    // Updating the earnings state to have a more specific type
+    const [earnings, setEarnings] = useState<{
+        totalEarnings: number;
+        earningsByDrink: Record<string, number>;
+    } | null>(null);
+    
     const fetchEarnings = async () => {
         try {
             const response = await fetch('http://localhost:8000/earnings')
@@ -18,13 +23,26 @@ const Earnings: React.FC<EarningsProps> = ({ triggerFetch }) => {
             console.error('Error fetching earnings data', error)
         }
     }
+    
     useEffect(() => {
         fetchEarnings();
     }, [triggerFetch])
 
     return (
     <div>
-        Earnings: {earnings}
+        <h3>
+            Earnings: ${earnings ? earnings.totalEarnings.toFixed(2) : "Loading..."}
+        </h3>
+        <div>
+            {earnings ? (
+                <ul>
+                    {Object.entries(earnings.earningsByDrink).map(([drink, amount]) =>
+                    <li key={drink}>{drink}: ${amount.toFixed(2)}</li>)}
+                </ul>
+            ) : (
+                    <p>Loading earnings by drink...</p>
+                )}
+        </div>
     </div>
     )
 }
