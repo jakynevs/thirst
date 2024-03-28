@@ -13,6 +13,7 @@ function DrinkPurchase({ onDrinkPurchase }: DrinkPurchaseProps) {
   const [moneyGiven, setMoneyGiven] = useState("");
   const [showEarnings, setShowEarnings] = useState(false);
   const [earningsTrigger, setEarningsTrigger] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleEarningsToggle = () => {
     setShowEarnings(!showEarnings);
@@ -25,6 +26,10 @@ function DrinkPurchase({ onDrinkPurchase }: DrinkPurchaseProps) {
 
   const handleBuyClick = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    if (isLoading) {
+      onDrinkPurchase("Fetching drink...");
+    }
     if (!selectedDrink) {
       onDrinkPurchase("Please select a drink first.");
       return;
