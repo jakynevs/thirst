@@ -40,7 +40,6 @@ export const buyDrink = async (
   drinkName: string,
   moneyGiven: number
 ): Promise<string> => {
-  console.log("Request being made in 'buyDrink()");
   try {
     const response = await fetch("http://localhost:8000/order", {
       method: "POST",
@@ -54,12 +53,10 @@ export const buyDrink = async (
     });
 
     const result = await response.json();
-    console.log("result: ", result);
 
     if (!response.ok) {
       throw new Error(result.message); // Use 'result.message' directly from the stored response body
     }
-    console.log("result: ", result);
     return result.message;
   } catch (error) {
     console.error("Error purchasing drinks:", error);

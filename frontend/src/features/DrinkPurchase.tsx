@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Dropdown from "../ui/Components/Dropdown";
 import EnterMoneyField from "../ui/Components/EnterMoneyField";
 import Earnings from "./Earnings";
@@ -9,7 +9,7 @@ type DrinkPurchaseProps = {
 };
 
 function DrinkPurchase({ onDrinkPurchase }: DrinkPurchaseProps) {
-  const [selectedDrink, setSelectedDrink] = useState("");
+  const [selectedDrink, setSelectedDrink] = useState({ name: "", price: 0 });
   const [moneyGiven, setMoneyGiven] = useState("");
   const [showEarnings, setShowEarnings] = useState(false);
   const [earningsTrigger, setEarningsTrigger] = useState(0);
@@ -26,17 +26,32 @@ function DrinkPurchase({ onDrinkPurchase }: DrinkPurchaseProps) {
 
   const handleBuyClick = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
+
     if (isLoading) {
       onDrinkPurchase("Fetching drink...");
     }
-    if (!selectedDrink) {
+    if (!selectedDrink.name) {
       onDrinkPurchase("Please select a drink first.");
+      setIsLoading(false);
       return;
     }
+    onDrinkPurchase("Fetching drink...");
+    setIsLoading(true);
     const moneyGivenNumber = parseFloat(moneyGiven);
+
+    if (moneyGivenNumber < selectedDrink.price) {
+      onDrinkPurchase(
+        `Insufficient funds. ${selectedDrink.name} costs $${selectedDrink.price}.`
+      );
+      setIsLoading(false);
+      return;
+    }
+
     try {
-      const resultMessage = await buyDrink(selectedDrink, moneyGivenNumber);
+      const resultMessage = await buyDrink(
+        selectedDrink.name,
+        moneyGivenNumber
+      );
       onDrinkPurchase(resultMessage);
       handleFetchEarnings();
     } catch (error) {

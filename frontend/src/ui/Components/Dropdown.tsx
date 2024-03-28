@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { fetchDrinks, Drink } from "../../api/api";
 
 interface DropdownProps {
-  selectedDrink: string;
-  setSelectedDrink: (drink: string) => void;
+  selectedDrink: Drink;
+  setSelectedDrink: (drink: Drink) => void;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({
@@ -12,9 +12,15 @@ const Dropdown: React.FC<DropdownProps> = ({
 }) => {
   const [drinks, setDrinks] = useState<Drink[]>([]);
 
-  // Handler for value change
   const handleChange = (event) => {
-    setSelectedDrink(event.target.value);
+    const selectedOption = drinks.find(
+      (drink) => drink.name === event.target.value
+    );
+    if (selectedOption) {
+      setSelectedDrink(selectedOption);
+    } else {
+      setSelectedDrink({ name: "", price: 0 }); // Reset or handle as necessary
+    }
   };
 
   useEffect(() => {
@@ -31,7 +37,7 @@ const Dropdown: React.FC<DropdownProps> = ({
 
   return (
     <div>
-      <select value={selectedDrink} onChange={handleChange}>
+      <select value={selectedDrink.name} onChange={handleChange}>
         <option value="">Choose your drink</option>
         {drinks.map((drink) => (
           <option key={drink.name} value={drink.name}>
