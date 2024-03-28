@@ -1,31 +1,37 @@
 import { Application, Request, Response } from 'express';
-
-const fs = require('fs');
+import fs from 'fs'
 
 const dataFilePath = 'data.json';
-// Read data from the JSON file
-const readDataFromFile = (dataFilePath: string) => {
+let cachedData: any = null;
 
-    try {
-      const data = fs.readFileSync(dataFilePath, 'utf8');
-      const cleanData = JSON.parse(data);
-      return cleanData;
-    
-    } catch (err) {
-          // Handle file read error or JSON parse error
-          const error = err as Error;
-          console.error('Error reading data:', error.message);
-          return null;
-    }
+// Read data from the JSON file
+const readDataFromFile = () => {
+    if (!cachedData) {
+        console.log("Loading data from file..."); // This should only log once if caching works
+        try {
+          const data = fs.readFileSync(dataFilePath, 'utf8');
+          cachedData = JSON.parse(data);
+        } catch (err) {
+            // Handle file read error or JSON parse error
+            const error = err as Error;
+            console.error('Error reading data:', error.message);
+            cachedData = null;
+        } 
+        } else {
+        console.log("Serving data from cache...")
+    }; // This should log on subsequent requests
+    return cachedData
   };
 
 function updateEarnings(drinkName: string, price: number) {
-    const data = readDataFromFile(dataFilePath)
-    data.earnings.totalEarnings += price
+    const data = readDataFromFile()
+    if (!data) return
     
+    data.earnings.totalEarnings += price
     data.earnings.earningsByDrink[drinkName] += price
 
     fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2));
+    cachedData = data
 }
 
 export const loadEndpoints = (app: Application): void => {
@@ -35,7 +41,7 @@ export const loadEndpoints = (app: Application): void => {
     });
     
     app.get("/drinks", (req: Request, res: Response) => {
-        const data = readDataFromFile(dataFilePath);
+        const data = readDataFromFile();
         const drinks = data.drinkType
         if (drinks) {
             return res.status(200).json(drinks);
@@ -45,7 +51,7 @@ export const loadEndpoints = (app: Application): void => {
     });
     
     app.get("/earnings", (req: Request, res: Response) => {
-        const data = readDataFromFile(dataFilePath);
+        const data = readDataFromFile();
         const earnings = data.earnings
         if (earnings) {
             return res.status(200).json(earnings);
@@ -56,7 +62,7 @@ export const loadEndpoints = (app: Application): void => {
     
     app.post("/order", (req: Request, res: Response) => {
         const { drinkName, moneyGiven } = req.body;        
-        const data = readDataFromFile(dataFilePath);        
+        const data = readDataFromFile();        
         const drinkMenu = data.drinkType
         const drinkOnMenu = drinkMenu.some((drink) => drink.name === drinkName)
         
