@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { fetchEarnings } from "../api/api";
 
 // Add props type for Earnings
 type EarningsProps = {
@@ -12,22 +13,13 @@ const Earnings: React.FC<EarningsProps> = ({ triggerFetch }) => {
     earningsByDrink: Record<string, number>;
   } | null>(null);
 
-  const fetchEarnings = async () => {
-    try {
-      const response = await fetch("http://localhost:8000/earnings");
-      if (!response.ok) {
-        throw new Error("Network reponse was not ok");
-      }
-      const data = await response.json();
-      setEarnings(data);
-    } catch (error) {
-      console.error("Error fetching earnings data", error);
-    }
-  };
-
   useEffect(() => {
-    console.log("Test");
-    fetchEarnings();
+    console.log("Fetching earnings");
+    fetchEarnings().then((data) => {
+      if (data) {
+        setEarnings(data);
+      }
+    });
   }, [triggerFetch]);
 
   return (

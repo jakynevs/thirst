@@ -3,6 +3,11 @@ export interface Drink {
   price: number;
 }
 
+type EarningsData = {
+  totalEarnings: number;
+  earningsByDrink: Record<string, number>;
+};
+
 export const fetchDrinks = async (): Promise<Drink[]> => {
   try {
     const response = await fetch("http://localhost:8000/drinks");
@@ -17,6 +22,19 @@ export const fetchDrinks = async (): Promise<Drink[]> => {
   }
 };
 
+export const fetchEarnings = async (): Promise<EarningsData | null> => {
+  try {
+    const response = await fetch("http://localhost:8000/earnings");
+    if (!response.ok) {
+      throw new Error("Network reponse was not ok");
+    }
+    const data: EarningsData = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching earnings data", error);
+    return null;
+  }
+};
 export const buyDrink = async (
   drinkName: string,
   moneyGiven: number
