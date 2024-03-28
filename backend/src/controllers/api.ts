@@ -1,5 +1,4 @@
 import { Application, Request, Response } from 'express';
-import path from 'path';
 
 const fs = require('fs');
 

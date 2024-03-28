@@ -9,7 +9,7 @@ const app = express();
 const port = process.env.PORT || 8000;
 
 const fs = require('fs');
-const dataFilePath = 'data.json';
+const dataFilePath = 'backend/data.json';
 
 app.use(bodyParser.json());
 app.use(cors())

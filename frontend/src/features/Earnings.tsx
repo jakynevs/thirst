@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { fetchEarnings } from "../api/api";
-
 // Add props type for Earnings
 type EarningsProps = {
   triggerFetch: number;

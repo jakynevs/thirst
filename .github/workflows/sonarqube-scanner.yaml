@@ -49,9 +49,9 @@ jobs:
         env:
           CI: true
 
-      - name: Generate webapp coverage
+      - name: Generate frontend coverage
         run: |
-          cd webapp
+          cd frontend
           yarn install
           yarn coverage
         env:

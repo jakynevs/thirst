@@ -33,7 +33,7 @@ As you could see on the [Makefile](Makefile) script, you could just avoid those 
 **deps** are dependant of it.
 
 Once these steps are finished, you could access to the application visiting these two urls:
-* Go to [http://localhost:3000](http://localhost:3000) to see that the React webapp everything is up & running!
+* Go to [http://localhost:3000](http://localhost:3000) to see that the React frontend everything is up & running!
 * Go to [http://localhost:8000/ping](http://localhost:8000/ping) to see that the Express API everything is up & running!
 
 ## Overview

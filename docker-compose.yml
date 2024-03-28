@@ -7,21 +7,21 @@ services:
     working_dir: "/opt/app"
 
 
-  api:
+  backend:
     <<: *node
-    container_name: rv-deliver-app-fullstack-api
+    container_name: backend
     ports:
       - "8000:8000"
     volumes:
-      - "${PWD}/api:/opt/app"
-      - ${PWD}/data.json:/opt/app/data.json
+      - "${PWD}/backend:/opt/app"
+      - "${PWD}/backend/data.json:/opt/app/data.json"
     entrypoint: ["yarn", "start"]
 
   app:
     <<: *node
-    container_name: rv-deliver-app-fullstack-webapp
+    container_name: frontend
     ports:
       - "3000:3000"
     volumes:
-      - "${PWD}/webapp:/opt/app"
+      - "${PWD}/frontend:/opt/app"
     entrypoint: [ "yarn", "start" ]

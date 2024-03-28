@@ -1,36 +1,36 @@
 .PHONY: test coverage
 
-deps: .deps-api .deps-webapp
+deps: .deps-backend .deps-frontend
 
 down:
 	docker-compose down
 
-up: .up-api .up-webapp
+up: .up-backend .up-frontend
 
-test: .test-api .test-webapp
+test: .test-backend .test-frontend
 
-coverage: .coverage-api .coverage-webapp
+coverage: .coverage-backend .coverage-frontend
 
-.deps-api:
-	docker-compose run -v "${PWD}/api:/opt/app" node yarn install
+.deps-backend:
+	docker-compose run -v "${PWD}/backend:/opt/app" node yarn install
 
-.deps-webapp:
-	docker-compose run -v "${PWD}/webapp:/opt/app" node yarn install
+.deps-frontend:
+	docker-compose run -v "${PWD}/frontend:/opt/app" node yarn install
 
-.up-api: .deps-api
-	docker-compose up -d api
+.up-backend: .deps-backend
+	docker-compose up -d backend
 
-.up-webapp: .deps-webapp
+.up-frontend: .deps-frontend
 	docker-compose up -d app
 
-.test-api: .deps-api
-	docker-compose run -v "${PWD}/api:/opt/app" -e CI=true node yarn test
+.test-backend: .deps-backend
+	docker-compose run -v "${PWD}/backend:/opt/app" -e CI=true node yarn test
 
-.test-webapp: .deps-webapp
-	docker-compose run -v "${PWD}/webapp:/opt/app" -e CI=true node yarn test
+.test-frontend: .deps-frontend
+	docker-compose run -v "${PWD}/frontend:/opt/app" -e CI=true node yarn test
 
-.coverage-api: .deps-api
-	docker-compose run -v "${PWD}/api:/opt/app" -e CI=true node yarn test --coverage
+.coverage-backend: .deps-backend
+	docker-compose run -v "${PWD}/backend:/opt/app" -e CI=true node yarn test --coverage
 
-.coverage-webapp: .deps-webapp
-	docker-compose run -v "${PWD}/webapp:/opt/app" -e CI=true node yarn coverage
+.coverage-frontend: .deps-frontend
+	docker-compose run -v "${PWD}/frontend:/opt/app" -e CI=true node yarn coverage
