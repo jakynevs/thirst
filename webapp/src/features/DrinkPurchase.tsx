@@ -2,6 +2,7 @@ import { useState } from "react";
 import Dropdown from "../ui/Components/Dropdown";
 import EnterMoneyField from "../ui/Components/EnterMoneyField";
 import Earnings from "./Earnings";
+import { buyDrink } from "../api/api";
 
 type DrinkPurchaseProps = {
   onDrinkPurchase: (message: string) => void;
@@ -26,33 +27,18 @@ function DrinkPurchase({ onDrinkPurchase }: DrinkPurchaseProps) {
     e.preventDefault();
     if (!selectedDrink) {
       onDrinkPurchase("Please select a drink first.");
-    } else {
-      console.log(`Purchasing ${selectedDrink} with ${moneyGiven}`);
-      try {
-        const response = await fetch("http://localhost:8000/order", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            drinkName: selectedDrink,
-            moneyGiven: moneyGiven,
-          }),
-        });
+      return;
+    }
+    const moneyGivenNumber = parseFloat(moneyGiven);
 
-        const result = await response.json();
-        if (response.ok) {
-          console.log("Success", result);
-          onDrinkPurchase(result.message);
-          handleFetchEarnings();
-        } else {
-          console.error("HTTP error:", response.status);
-          onDrinkPurchase(result.message);
-        }
-      } catch (error) {
-        console.log("Network error", error);
-        onDrinkPurchase("Failed to complete purchase due to a network error.");
-      }
+    console.log(`Purchasing ${selectedDrink} with ${moneyGiven}`);
+    try {
+      const resultMessage = await buyDrink(selectedDrink, moneyGivenNumber);
+      onDrinkPurchase(resultMessage);
+      handleFetchEarnings();
+    } catch (error) {
+      console.log("Network error", error);
+      onDrinkPurchase("Failed to complete purchase due to a network error.");
     }
   };
 

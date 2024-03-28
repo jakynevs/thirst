@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { fetchDrinks } from "../../api/api";
-
-interface Drink {
-  name: string;
-  price: number;
-}
+import { fetchDrinks, Drink } from "../../api/api";
 
 interface DropdownProps {
   selectedDrink: string;
