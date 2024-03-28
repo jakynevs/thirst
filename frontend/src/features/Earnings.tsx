@@ -13,7 +13,6 @@ const Earnings: React.FC<EarningsProps> = ({ triggerFetch }) => {
   } | null>(null);
 
   useEffect(() => {
-    console.log("Fetching earnings");
     fetchEarnings().then((data) => {
       if (data) {
         setEarnings(data);

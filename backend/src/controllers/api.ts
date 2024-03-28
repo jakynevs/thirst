@@ -7,7 +7,6 @@ let cachedData: any = null;
 // Read data from the JSON file
 const readDataFromFile = () => {
     if (!cachedData) {
-        console.log("Loading data from file..."); // This should only log once if caching works
         try {
           const data = fs.readFileSync(dataFilePath, 'utf8');
           cachedData = JSON.parse(data);
@@ -18,7 +17,6 @@ const readDataFromFile = () => {
             cachedData = null;
         } 
         } else {
-        console.log("Serving data from cache...")
     }; // This should log on subsequent requests
     return cachedData
   };
