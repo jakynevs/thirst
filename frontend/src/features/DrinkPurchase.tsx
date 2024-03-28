@@ -30,7 +30,6 @@ function DrinkPurchase({ onDrinkPurchase }: DrinkPurchaseProps) {
       return;
     }
     const moneyGivenNumber = parseFloat(moneyGiven);
-
     console.log(`Purchasing ${selectedDrink} with ${moneyGiven}`);
     try {
       const resultMessage = await buyDrink(selectedDrink, moneyGivenNumber);
@@ -38,7 +37,9 @@ function DrinkPurchase({ onDrinkPurchase }: DrinkPurchaseProps) {
       handleFetchEarnings();
     } catch (error) {
       console.log("Network error", error);
-      onDrinkPurchase("Failed to complete purchase due to a network error.");
+      if (error instanceof Error) {
+        onDrinkPurchase(error.message); // Display the backend error message
+      }
     }
   };
 

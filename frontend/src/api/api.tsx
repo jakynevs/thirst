@@ -35,6 +35,7 @@ export const fetchEarnings = async (): Promise<EarningsData | null> => {
     return null;
   }
 };
+
 export const buyDrink = async (
   drinkName: string,
   moneyGiven: number
@@ -56,8 +57,9 @@ export const buyDrink = async (
     console.log("result: ", result);
 
     if (!response.ok) {
-      throw new Error("Network response was not ok");
+      throw new Error(result.message); // Use 'result.message' directly from the stored response body
     }
+    console.log("result: ", result);
     return result.message;
   } catch (error) {
     console.error("Error purchasing drinks:", error);
