@@ -12,12 +12,40 @@ const Earnings: React.FC<EarningsProps> = ({ triggerFetch }) => {
     earningsByDrink: Record<string, number>;
   } | null>(null);
 
+  // Fetching on component mount
   useEffect(() => {
-    fetchEarnings().then((data) => {
-      if (data) {
-        setEarnings(data);
-      }
-    });
+    fetchEarnings()
+      .then(setEarnings) // Assuming the API always returns the current earnings
+      .catch((error) => console.error("Error in fetchEarnings:", error));
+  }, []); // Empty dependency array ensures this only runs once on mount
+
+  // Fetching when a drink is bought
+  useEffect(() => {
+    if (triggerFetch === 0) return; // Skip the initial mount
+
+    let isMounted = true;
+
+    fetchEarnings()
+      .then((data) => {
+        if (isMounted && data) {
+          setEarnings((prevEarnings) => {
+            if (
+              !prevEarnings ||
+              prevEarnings.totalEarnings !== data.totalEarnings ||
+              JSON.stringify(prevEarnings.earningsByDrink) !==
+                JSON.stringify(data.earningsByDrink)
+            ) {
+              return data;
+            }
+            return prevEarnings;
+          });
+        }
+      })
+      .catch((error) => console.error("Error in fetchEarnings:", error));
+
+    return () => {
+      isMounted = false;
+    };
   }, [triggerFetch]);
 
   return (

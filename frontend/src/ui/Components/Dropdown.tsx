@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { fetchDrinks, Drink } from "../../api/api";
+import styles from "../../features/DrinkPurchase.module.css";
 
 interface DropdownProps {
   selectedDrink: Drink;
   setSelectedDrink: (drink: Drink) => void;
+  className?: string;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({
@@ -36,7 +38,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   }, []);
 
   return (
-    <div>
+    <div className={styles.dropdown}>
       <select value={selectedDrink.name} onChange={handleChange}>
         <option value="">Choose your drink</option>
         {drinks.map((drink) => (

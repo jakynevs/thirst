@@ -1,0 +1,33 @@
+/* DrinkPurchase.module.css */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Style for dropdown */
+.dropdown {
+    width: 100%; /* Set dropdown to occupy full width */
+    margin-bottom: 10px; /* Add margin for spacing */
+}
+
+/* Style for money field */
+.money-field {
+    width: 100%; /* Set money field to occupy full width */
+    margin-bottom: 10px; /* Add margin for spacing */
+}
+
+/* Style for buttons */
+.buttons {
+    width: 100%; /* Set buttons to occupy full width */
+    display: flex;
+    justify-content: space-around; /* Distribute buttons evenly */
+}
+
+/* Individual button styles */
+.buttons button {
+    width: calc(33.33% - 5px); /* Divide available space evenly among buttons */
+}
+
+/* Additional styles can be added as needed */

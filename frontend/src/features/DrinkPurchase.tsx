@@ -1,3 +1,4 @@
+import styles from "./DrinkPurchase.module.css";
 import { useState, useEffect } from "react";
 import Dropdown from "../ui/Components/Dropdown";
 import EnterMoneyField from "../ui/Components/EnterMoneyField";
@@ -17,11 +18,6 @@ function DrinkPurchase({ onDrinkPurchase }: DrinkPurchaseProps) {
 
   const handleEarningsToggle = () => {
     setShowEarnings(!showEarnings);
-  };
-
-  // Function to increment triggerFetch
-  const handleFetchEarnings = () => {
-    setEarningsTrigger((prev) => prev + 1);
   };
 
   const handleBuyClick = async (e) => {
@@ -53,27 +49,41 @@ function DrinkPurchase({ onDrinkPurchase }: DrinkPurchaseProps) {
         moneyGivenNumber
       );
       onDrinkPurchase(resultMessage);
-      handleFetchEarnings();
+      setEarningsTrigger((prev) => prev + 1); // Increment to trigger re-fetch
     } catch (error) {
       if (error instanceof Error) {
         onDrinkPurchase(error.message); // Display the backend error message
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div>
-      <Dropdown
-        selectedDrink={selectedDrink}
-        setSelectedDrink={setSelectedDrink}
-      />
-      <EnterMoneyField moneyGiven={moneyGiven} setMoneyGiven={setMoneyGiven} />
-      <button onClick={handleBuyClick}>Buy</button>
-      <button onClick={handleEarningsToggle}>
-        {showEarnings ? "Hide" : "Show"} Earnings
-      </button>
-      <div style={{ display: showEarnings ? "block" : "none" }}>
-        <Earnings triggerFetch={earningsTrigger} />
+    <div className={styles.container}>
+      <div className={styles.container}>
+        <Dropdown
+          selectedDrink={selectedDrink}
+          setSelectedDrink={setSelectedDrink}
+          className={styles.dropdown}
+        />
+        <EnterMoneyField
+          moneyGiven={moneyGiven}
+          setMoneyGiven={setMoneyGiven}
+          className={styles.moneyField}
+        />
+        <button className={styles.buttons} onClick={handleBuyClick}>
+          Buy
+        </button>
+        <button className={styles.buttons} onClick={handleEarningsToggle}>
+          {showEarnings ? "Hide" : "Show"} Earnings
+        </button>
+        <div
+          className={styles.container}
+          style={{ display: showEarnings ? "block" : "none" }}
+        >
+          <Earnings triggerFetch={earningsTrigger} />
+        </div>
       </div>
     </div>
   );
