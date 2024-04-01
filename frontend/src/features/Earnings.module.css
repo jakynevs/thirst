@@ -1,0 +1,9 @@
+.earningsContainer {
+  text-align: left; /* Aligns text to the left */
+}
+
+.earningsList {
+  list-style-type: none; /* Removes bullet points */
+  padding: 0; /* Resets any padding that could indent items */
+  text-align: left; /* Aligns text to the left */
+}

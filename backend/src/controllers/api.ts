@@ -77,6 +77,6 @@ export const loadEndpoints = (app: Application): void => {
         const change = moneyGiven - drinkPrice
         updateEarnings(selectedDrink, drinkPrice)
         
-        return res.status(200).json({ message: `Successful order - here is your ${drinkName} and your change is ${change.toFixed(2)}. \nFeel free to order something else...`});
+        return res.status(200).json({ message: `Successful order - Drink: ${drinkName} Change: ${change.toFixed(2)}. \nFeel free to order something else...`});
     });
 };  

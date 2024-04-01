@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { fetchEarnings } from "../api/api";
+import styles from "./Earnings.module.css";
+
 // Add props type for Earnings
-type EarningsProps = {
+interface EarningsProps {
   triggerFetch: number;
-};
+  // Add other props as needed
+  className?: string; // This line should be added to include className as an optional prop
+}
 
 const Earnings: React.FC<EarningsProps> = ({ triggerFetch }) => {
   // Updating the earnings state to have a more specific type
@@ -49,13 +53,13 @@ const Earnings: React.FC<EarningsProps> = ({ triggerFetch }) => {
   }, [triggerFetch]);
 
   return (
-    <div>
+    <div className={styles.earningsContainer}>
       <h3>
         Earnings: ${earnings ? earnings.totalEarnings.toFixed(2) : "Loading..."}
       </h3>
       <div>
         {earnings ? (
-          <ul>
+          <ul className={styles.earningsList}>
             {Object.entries(earnings.earningsByDrink).map(([drink, amount]) => (
               <li key={drink}>
                 {drink}: ${amount.toFixed(2)}
