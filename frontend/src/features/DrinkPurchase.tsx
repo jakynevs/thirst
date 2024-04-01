@@ -1,5 +1,5 @@
 import styles from "./DrinkPurchase.module.css";
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import Dropdown from "../ui/Components/Dropdown";
 import EnterMoneyField from "../ui/Components/EnterMoneyField";
 import Earnings from "./Earnings";
@@ -65,30 +65,27 @@ function DrinkPurchase() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.container}>
-        <TransactionMessage text={transactionMessageText} />
-        <Dropdown
-          selectedDrink={selectedDrink}
-          setSelectedDrink={setSelectedDrink}
-          className={styles.dropdown}
-        />
-        <EnterMoneyField
-          moneyGiven={moneyGiven}
-          setMoneyGiven={setMoneyGiven}
-          className={styles.moneyField}
-        />
-        <button className={styles.buttons} onClick={handleBuyClick}>
+      <TransactionMessage text={transactionMessageText} />
+      <Dropdown
+        selectedDrink={selectedDrink}
+        setSelectedDrink={setSelectedDrink}
+        className={styles.dropdown}
+      />
+      <EnterMoneyField
+        moneyGiven={moneyGiven}
+        setMoneyGiven={setMoneyGiven}
+        className={styles.moneyField} // Make sure this matches the CSS class name
+      />
+      <div className={styles.buttonContainer}>
+        <button onClick={handleBuyClick} style={{ marginRight: "5px" }}>
           Buy
         </button>
-        <button className={styles.buttons} onClick={handleEarningsToggle}>
+        <button onClick={handleEarningsToggle} style={{ marginLeft: "5px" }}>
           {showEarnings ? "Hide" : "Show"} Earnings
         </button>
-        <div
-          className={styles.container}
-          style={{ display: showEarnings ? "block" : "none" }}
-        >
-          <Earnings triggerFetch={earningsTrigger} />
-        </div>
+      </div>
+      <div style={{ display: showEarnings ? "block" : "none" }}>
+        <Earnings triggerFetch={earningsTrigger} />
       </div>
     </div>
   );

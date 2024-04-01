@@ -1,33 +1,44 @@
 /* DrinkPurchase.module.css */
 
+
+/* Apply box-sizing to all elements */
+* {
+    box-sizing: border-box;
+}
+
 .container {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch; /* Children will stretch to the full width of the container */
+    width: 60%; /* Set container to full width to avoid overflow */
+    margin: 0 auto;
 }
 
-/* Style for dropdown */
-.dropdown {
-    width: 100%; /* Set dropdown to occupy full width */
-    margin-bottom: 10px; /* Add margin for spacing */
+/* Reset styles for form elements */
+input, button, select {
+  border: 4px solid #19a5b5; /* Example border, adjust as needed */
+  padding: 10px; /* Example padding, adjust as needed */
+  width: 100%; /* Full width */
+  margin-bottom: 20px; /* Consistent bottom margin */
+  border-radius: 8px; /* Rounded corners for all form elements */
+}
+/* Specific styles for select element to reset any user agent styling */
+.dropdown select {
+  width: 100%; /* Override any default width */
+  -webkit-appearance: none; /* Removes default styling on iOS */
+  -moz-appearance: none; /* Removes default styling on Firefox */
+  appearance: none; /* Removes default styling */
+  background-color: white;
+  font-family: inherit; /* To match other inputs' font */
 }
 
-/* Style for money field */
-.money-field {
-    width: 100%; /* Set money field to occupy full width */
-    margin-bottom: 10px; /* Add margin for spacing */
+.buttonContainer {
+  display: flex;
+  justify-content: space-between; /* This will position buttons at the space-between */
 }
 
-/* Style for buttons */
-.buttons {
-    width: 100%; /* Set buttons to occupy full width */
-    display: flex;
-    justify-content: space-around; /* Distribute buttons evenly */
+.buttonContainer button {
+  flex: 1; /* Flex grow to fill the space */
 }
 
-/* Individual button styles */
-.buttons button {
-    width: calc(33.33% - 5px); /* Divide available space evenly among buttons */
-}
 
-/* Additional styles can be added as needed */
