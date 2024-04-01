@@ -1,17 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./Home.module.css";
 import DrinkPurchase from "../../features/DrinkPurchase";
 
-type homeProps = {
-  onDrinkPurchase: (text: string) => void;
-};
-
-const Home: React.FC<homeProps> = ({ onDrinkPurchase }) => {
-  const [moneyGiven, setMoneyGiven] = useState("");
-
+const Home: React.FC = () => {
   return (
     <div className={styles.home}>
-      <DrinkPurchase onDrinkPurchase={onDrinkPurchase} />
+      <DrinkPurchase />
     </div>
   );
 };

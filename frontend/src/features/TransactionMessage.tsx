@@ -1,15 +1,16 @@
-import styles from "./Header.module.css";
 import React from "react";
 
-type HeaderProps = {
+type TransactionMessageProps = {
   text: string;
 };
 
-export const Header: React.FC<HeaderProps> = ({ text }) => {
+export const TransactionMessage: React.FC<TransactionMessageProps> = ({
+  text,
+}) => {
   const lines = text.split("\n");
 
   return (
-    <header className={styles.header}>
+    <header className="transactionmessage">
       <h3>
         {lines.map((line, index) => (
           <React.Fragment key={index}>
