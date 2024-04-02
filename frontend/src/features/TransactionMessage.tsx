@@ -1,7 +1,9 @@
 import React from "react";
+import styles from "./DrinkPurchase.module.css";
 
 type TransactionMessageProps = {
   text: string;
+  className?: string;
 };
 
 export const TransactionMessage: React.FC<TransactionMessageProps> = ({
@@ -10,7 +12,7 @@ export const TransactionMessage: React.FC<TransactionMessageProps> = ({
   const lines = text.split("\n");
 
   return (
-    <header className="transactionmessage">
+    <header className={styles.transactionMessage}>
       <h3>
         {lines.map((line, index) => (
           <React.Fragment key={index}>
