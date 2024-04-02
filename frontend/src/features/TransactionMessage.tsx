@@ -8,19 +8,11 @@ type TransactionMessageProps = {
 
 export const TransactionMessage: React.FC<TransactionMessageProps> = ({
   text,
+  className = "",
 }) => {
-  const lines = text.split("\n");
-
   return (
-    <header className={styles.transactionMessage}>
-      <h3>
-        {lines.map((line, index) => (
-          <React.Fragment key={index}>
-            {line}
-            {index < lines.length - 1 && <br />}
-          </React.Fragment>
-        ))}
-      </h3>
+    <header className={`${styles.transactionMessage} ${className}`}>
+      <h3 className={styles.lineBreakText}>{text}</h3>
     </header>
   );
 };

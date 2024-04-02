@@ -1,25 +1,23 @@
 import React from "react";
 
 interface EnterMoneyFieldProps {
-  moneyGiven: string;
-  setMoneyGiven: (moneyGiven: string) => void;
+  enteredMoney: string;
+  setenteredMoney: (enteredMoney: string) => void;
   className?: string;
 }
 const EnterMoneyField: React.FC<EnterMoneyFieldProps> = ({
-  moneyGiven,
-  setMoneyGiven,
+  enteredMoney,
+  setenteredMoney,
 }) => {
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    if (!value || parseFloat(value) >= 0) {
-      setMoneyGiven(value);
-    }
+    setenteredMoney(!value || parseFloat(value) >= 0 ? value : enteredMoney);
   };
   return (
     <div>
       <input
         type="number"
-        value={moneyGiven}
+        value={enteredMoney}
         onChange={handleChange}
         placeholder="Enter money"
       />

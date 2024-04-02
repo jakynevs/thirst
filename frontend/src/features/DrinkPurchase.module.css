@@ -3,18 +3,22 @@
     box-sizing: border-box;
 }
 
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch; /* Children will stretch to the full width of the container */
+  width: 60%; /* Set container to full width to avoid overflow */
+  margin: 0 auto;
+}
+
 .transactionMessage {
   text-align: center;
 }
 
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch; /* Children will stretch to the full width of the container */
-    width: 60%; /* Set container to full width to avoid overflow */
-    margin: 0 auto;
+.lineBreakText {
+  white-space: pre-line; /* This CSS property will render newline characters as actual breaks */
 }
-
 /* Reset styles for form elements */
 input, button, select {
   border: 4px solid #19a5b5; /* Example border, adjust as needed */
@@ -24,7 +28,7 @@ input, button, select {
   border-radius: 8px; /* Rounded corners for all form elements */
 }
 /* Specific styles for select element to reset any user agent styling */
-.dropdown select {
+.drinkSelector select {
   width: 100%; /* Override any default width */
   -webkit-appearance: none; /* Removes default styling on iOS */
   -moz-appearance: none; /* Removes default styling on Firefox */
@@ -41,5 +45,15 @@ input, button, select {
 .buttonContainer button {
   flex: 1; /* Flex grow to fill the space */
 }
+
+/* DrinkPurchase.module.css */
+.buyButton {
+  margin-right: 5px;
+}
+
+.toggleEarningsButton {
+  margin-left: 5px;
+}
+
 
 

@@ -26,19 +26,19 @@ export const fetchEarnings = async (): Promise<EarningsData | null> => {
   try {
     const response = await fetch("http://localhost:8000/earnings");
     if (!response.ok) {
-      throw new Error("Network reponse was not ok");
+      throw new Error("Network response was not ok");
     }
     const data: EarningsData = await response.json();
     return data;
   } catch (error) {
     console.error("Error fetching earnings data", error);
-    return null;
+    throw error;
   }
 };
 
 export const buyDrink = async (
   drinkName: string,
-  moneyGiven: number
+  enteredMoney: number
 ): Promise<string> => {
   try {
     const response = await fetch("http://localhost:8000/order", {
@@ -48,15 +48,17 @@ export const buyDrink = async (
       },
       body: JSON.stringify({
         drinkName,
-        moneyGiven,
+        enteredMoney,
       }),
     });
 
-    const result = await response.json();
-
     if (!response.ok) {
-      throw new Error(result.message); // Use 'result.message' directly from the stored response body
+      // Attempt to parse error details from the response
+      const errorResponse = await response.json();
+      throw new Error(errorResponse.message || "Network response was not ok");
     }
+
+    const result = await response.json();
     return result.message;
   } catch (error) {
     console.error("Error purchasing drinks:", error);

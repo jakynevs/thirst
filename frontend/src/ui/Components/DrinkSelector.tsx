@@ -2,27 +2,23 @@ import React, { useState, useEffect } from "react";
 import { fetchDrinks, Drink } from "../../api/api";
 import styles from "../../features/DrinkPurchase.module.css";
 
-interface DropdownProps {
+interface DrinkSelectorProps {
   selectedDrink: Drink;
   setSelectedDrink: (drink: Drink) => void;
   className?: string;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({
+const DrinkSelector: React.FC<DrinkSelectorProps> = ({
   selectedDrink,
   setSelectedDrink,
 }) => {
   const [drinks, setDrinks] = useState<Drink[]>([]);
 
-  const handleChange = (event) => {
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedOption = drinks.find(
-      (drink) => drink.name === event.target.value
+      (drink) => drink.name === e.target.value
     );
-    if (selectedOption) {
-      setSelectedDrink(selectedOption);
-    } else {
-      setSelectedDrink({ name: "", price: 0 }); // Reset or handle as necessary
-    }
+    setSelectedDrink(selectedOption || { name: "", price: 0 });
   };
 
   useEffect(() => {
@@ -38,8 +34,12 @@ const Dropdown: React.FC<DropdownProps> = ({
   }, []);
 
   return (
-    <div className={styles.dropdown}>
-      <select value={selectedDrink.name} onChange={handleChange}>
+    <div className={styles.DrinkSelector}>
+      <select
+        value={selectedDrink.name}
+        onChange={handleChange}
+        aria-label="Select a drink"
+      >
         <option value="">Choose your drink</option>
         {drinks.map((drink) => (
           <option key={drink.name} value={drink.name}>
@@ -51,4 +51,4 @@ const Dropdown: React.FC<DropdownProps> = ({
   );
 };
 
-export default Dropdown;
+export default DrinkSelector;

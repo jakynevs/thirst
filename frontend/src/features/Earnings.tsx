@@ -4,17 +4,18 @@ import styles from "./Earnings.module.css";
 
 // Add props type for Earnings
 interface EarningsProps {
-  triggerFetch: number;
+  refreshIndicator: number;
   // Add other props as needed
   className?: string; // This line should be added to include className as an optional prop
 }
+interface EarningsState {
+  totalEarnings: number;
+  earningsByDrink: Record<string, number>;
+}
 
-const Earnings: React.FC<EarningsProps> = ({ triggerFetch }) => {
+const Earnings: React.FC<EarningsProps> = ({ refreshIndicator }) => {
   // Updating the earnings state to have a more specific type
-  const [earnings, setEarnings] = useState<{
-    totalEarnings: number;
-    earningsByDrink: Record<string, number>;
-  } | null>(null);
+  const [earnings, setEarnings] = useState<EarningsState | null>(null);
 
   // Fetching on component mount
   useEffect(() => {
@@ -23,9 +24,9 @@ const Earnings: React.FC<EarningsProps> = ({ triggerFetch }) => {
       .catch((error) => console.error("Error in fetchEarnings:", error));
   }, []); // Empty dependency array ensures this only runs once on mount
 
-  // Fetching when a drink is bought
+  // Refetch earnings when triggerFetch changes, except on initial mount.
   useEffect(() => {
-    if (triggerFetch === 0) return; // Skip the initial mount
+    if (refreshIndicator === 0) return; // Skip the initial mount
 
     let isMounted = true;
 
@@ -50,7 +51,7 @@ const Earnings: React.FC<EarningsProps> = ({ triggerFetch }) => {
     return () => {
       isMounted = false;
     };
-  }, [triggerFetch]);
+  }, [refreshIndicator]);
 
   return (
     <div className={styles.earningsContainer}>

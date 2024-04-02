@@ -1,6 +1,6 @@
 import styles from "./DrinkPurchase.module.css";
 import { useState } from "react";
-import Dropdown from "../ui/Components/Dropdown";
+import DrinkSelector from "../ui/Components/DrinkSelector";
 import EnterMoneyField from "../ui/Components/EnterMoneyField";
 import Earnings from "./Earnings";
 import { buyDrink } from "../api/api";
@@ -8,15 +8,15 @@ import { TransactionMessage } from "./TransactionMessage";
 
 function DrinkPurchase() {
   const [selectedDrink, setSelectedDrink] = useState({ name: "", price: 0 });
-  const [moneyGiven, setMoneyGiven] = useState("");
+  const [enteredMoney, setenteredMoney] = useState("");
   const [showEarnings, setShowEarnings] = useState(false);
-  const [earningsTrigger, setEarningsTrigger] = useState(0);
+  const [earningsRefreshCount, setEarningsRefreshCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [transactionMessageText, setTransactionMessageText] = useState(
     "Please choose a drink and enter money"
   );
 
-  const handleEarningsToggle = () => {
+  const toggleEarningsVisibility = () => {
     setShowEarnings(!showEarnings);
   };
 
@@ -24,68 +24,69 @@ function DrinkPurchase() {
     setTransactionMessageText(newText);
   };
 
-  const handleBuyClick = async (e) => {
+  const handleBuyClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    if (isLoading) {
-      updateTransactionMessage("Fetching drink...");
-    }
+    // Early exit if already processing another purchase
+    if (isLoading) return;
+
+    setIsLoading(true); // Set loading state at the beginning
+
     if (!selectedDrink.name) {
       updateTransactionMessage("Please select a drink first.");
-      setIsLoading(false);
-      return;
-    }
-    updateTransactionMessage("Fetching drink...");
-    setIsLoading(true);
-    const moneyGivenNumber = parseFloat(moneyGiven);
-
-    if (moneyGivenNumber < selectedDrink.price) {
-      updateTransactionMessage(
-        `Insufficient funds. ${selectedDrink.name} costs $${selectedDrink.price}.`
-      );
-      setIsLoading(false);
-      return;
-    }
-
-    try {
-      const resultMessage = await buyDrink(
-        selectedDrink.name,
-        moneyGivenNumber
-      );
-      updateTransactionMessage(resultMessage);
-      setEarningsTrigger((prev) => prev + 1); // Increment to trigger re-fetch
-    } catch (error) {
-      if (error instanceof Error) {
-        updateTransactionMessage(error.message); // Display the backend error message
+    } else {
+      const moneyGivenNumber = parseFloat(enteredMoney);
+      if (moneyGivenNumber < selectedDrink.price) {
+        updateTransactionMessage(
+          `Insufficient funds. ${
+            selectedDrink.name
+          } costs $${selectedDrink.price.toFixed(2)}.`
+        );
+      } else {
+        try {
+          const resultMessage = await buyDrink(
+            selectedDrink.name,
+            moneyGivenNumber
+          );
+          updateTransactionMessage(resultMessage);
+          setEarningsRefreshCount((prev) => prev + 1); // Increment to trigger re-fetch of earnings
+        } catch (error) {
+          updateTransactionMessage(
+            error instanceof Error ? error.message : "An error occurred"
+          );
+        }
       }
-    } finally {
-      setIsLoading(false);
     }
+
+    setIsLoading(false); // Reset loading state at the end, regardless of the outcome
   };
 
   return (
     <div className={styles.container}>
       <TransactionMessage text={transactionMessageText} />
-      <Dropdown
+      <DrinkSelector
         selectedDrink={selectedDrink}
         setSelectedDrink={setSelectedDrink}
-        className={styles.dropdown}
+        className={styles.drinkSelector}
       />
       <EnterMoneyField
-        moneyGiven={moneyGiven}
-        setMoneyGiven={setMoneyGiven}
+        enteredMoney={enteredMoney}
+        setenteredMoney={setenteredMoney}
         className={styles.moneyField} // Make sure this matches the CSS class name
       />
       <div className={styles.buttonContainer}>
-        <button onClick={handleBuyClick} style={{ marginRight: "5px" }}>
+        <button onClick={handleBuyClick} className={styles.buyButton}>
           Buy
         </button>
-        <button onClick={handleEarningsToggle} style={{ marginLeft: "5px" }}>
+        <button
+          onClick={toggleEarningsVisibility}
+          className={styles.toggleEarningsButton}
+        >
           {showEarnings ? "Hide" : "Show"} Earnings
         </button>
       </div>
       <div style={{ display: showEarnings ? "block" : "none" }}>
-        <Earnings triggerFetch={earningsTrigger} />
+        <Earnings refreshIndicator={earningsRefreshCount} />
       </div>
     </div>
   );

@@ -1,20 +1,18 @@
-#!/usr/bin/env node
-import { loadEndpoints } from "./controllers/api";
-
-const express = require('express')
-const bodyParser = require('body-parser');
-const cors = require('cors')
+import express from 'express';
+import cors from 'cors';
+import { loadEndpoints } from './controllers/api';
 
 const app = express();
 const port = process.env.PORT || 8000;
 
-const fs = require('fs');
-const dataFilePath = 'backend/data.json';
-
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(cors())
 app.set('port', port)
 
 loadEndpoints(app)
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
 
 export default app;

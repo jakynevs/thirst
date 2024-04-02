@@ -27,13 +27,13 @@
     }
   ],
   "earnings": {
-    "totalEarnings": 212.17,
+    "totalEarnings": 241.66,
     "earningsByDrink": {
-      "Pop": 47.760000000000005,
+      "Pop": 49.75000000000001,
       "Juice": 26.910000000000004,
-      "Agua": 17.5,
-      "Kombucha": 84,
-      "Pina Coloda": 36
+      "Agua": 20,
+      "Kombucha": 100,
+      "Pina Coloda": 45
     }
   }
 }
