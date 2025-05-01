@@ -46,7 +46,7 @@ This app leverages Docker to simplify the setup and execution process, ensuring 
 First, clone the repository to your local machine:
 
 ```
-git clone https://github.com/jakynevs/thirst-app.git
+git clone https://github.com/jakynevs/thirst.git
 cd thirst-app
 ```
 
