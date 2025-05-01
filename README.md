@@ -47,7 +47,7 @@ First, clone the repository to your local machine:
 
 ```
 git clone https://github.com/jakynevs/thirst.git
-cd thirst-app
+cd thirst
 ```
 
 ### Running the App
